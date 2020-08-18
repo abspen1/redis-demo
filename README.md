@@ -1,6 +1,5 @@
 ## 📁 demo-redis
-**[redis](https://redis.io/)**
-This is a very limited example of the possible uses of Redis Database. There are several different clients for most languages. I have 2 Golang client examples. I prefer redigo over redis-go since it has a similar simplistic feel to the redis in python. ioredis is a great choice for a JavaScript client as well.
+This is a very limited example of the possible uses of **[Redis Database](https://redis.io/)**. There are several different clients for most languages. I have 2 Golang client examples. I prefer redigo over redis-go since it has a similar simplistic feel to the redis in python. ioredis is a great choice for a JavaScript client as well.
 
 
 ## Sources JavaScript

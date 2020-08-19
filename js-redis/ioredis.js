@@ -8,86 +8,153 @@ var client = new Redis({
     port: 6379,          // Redis port
     host: '10.10.10.1',   // Redis host
     password: redisPass,
-    db: 2,
+    db: 3,
 })
 
 
-// ioredis supports all Redis commands:
-client.set("foo", "bar"); // returns promise which resolves to string, "OK"
+// // ioredis supports all Redis commands:
+// client.set("foo", "bar"); // returns promise which resolves to string, "OK"
 
-// the format is: redis[SOME_REDIS_COMMAND_IN_LOWERCASE](ARGUMENTS_ARE_JOINED_INTO_COMMAND_STRING)
-// the js: ` client.set("mykey", "Hello") ` is equivalent to the cli: ` redis> SET mykey "Hello" `
+// // the format is: redis[SOME_REDIS_COMMAND_IN_LOWERCASE](ARGUMENTS_ARE_JOINED_INTO_COMMAND_STRING)
+// // the js: ` client.set("mykey", "Hello") ` is equivalent to the cli: ` redis> SET mykey "Hello" `
 
-// ioredis supports the node.js callback style
-client.get("foo", function (err, result) {
+// // ioredis supports the node.js callback style
+// client.get("foo", function (err, result) {
+//     if (err) {
+//         console.error(err);
+//     } else {
+//         console.log(result); // Promise resolves to "bar"
+//     }
+// });
+
+// // Or ioredis returns a promise if the last argument isn't a function
+// client.get("foo").then(function (result) {
+//     console.log(result);
+// });
+
+// client.del("foo");
+
+// // Arguments to commands are flattened, so the following are the same:
+// client.sadd("set", 1, 3, 5, 7);
+// client.sadd("set", [1, 3, 5, 7]);
+// client.spop("set").then((res) => console.log(res)); // Promise resolves random value from the set
+
+// // Most responses are strings, or arrays of strings
+// client.zadd("sortedSet", 1, "one", 2, "dos", 4, "quatro", 3, "three");
+// client.zrange("sortedSet", 0, 2, "WITHSCORES").then((res) => console.log(res));
+// // Promise resolves to ["one", "1", "dos", "2", "three", "3"] as if the command was ` redis> ZRANGE sortedSet 0 2 WITHSCORES `
+
+// // Some responses have transformers to JS values
+// client.hset("myhash", "field1", "Hello");
+// client.hgetall("myhash").then((res) => console.log(res)); // Promise resolves to Object {field1: "Hello"} rather than a string, or array of strings
+
+// // All arguments are passed directly to the redis server:
+// client.set("key", 100, "EX", 10); // set's key to value 100 and expires it after 10 seconds
+
+// // Change the server configuration
+// // client.config("set", "notify-keyspace-events", "KEA");
+
+
+// // Demo the strings
+
+// client.set('language', 'JavaScript')
+
+// client.get('language').then(function (result) {
+//     console.log(result);
+// });
+
+// client.set("language", "JavaScript", "EX", 10); // set's key to value JavaScript and expires it after 10 seconds
+
+// // Demo the sets 
+
+// client.sadd('jslist', "value1", "value2", "value3", "value4")
+// client.sadd('powerlist', "value1", "value5", "value6", "value7")
+
+// // Intercept of the two sets
+// client.sinter('jslist', 'powerlist').then((res) => console.log(res));
+// client.sunion('jslist', 'powerslist').then((res) => console.log(res));
+// client.scard('jslist').then((res) => console.log(res));
+// client.scard('powerlist').then((res) => console.log(res));
+
+
+
+// // Demo the hashes
+
+// client.hset('Hero', 'Name', 'Drow Ranger')
+// client.hset('Hero', 'Health', '600')
+// client.hset('Hero', 'Mana', '200')
+
+// client.hgetall('Hero').then((res) => console.log(res));
+
+// var hash;
+
+// client.hgetall("Hero", function (err, result) {
+//     if (err) {
+//         console.error(err);
+//     } else {
+//         const entries = Object.entries(result)
+//         for (var [name, val] of entries) {
+//             console.log(`There are ${val} ${name}`)
+//         }
+//     }
+// });
+
+// // client.hset("testings", "Python", "Calculator App")
+// // client.hgetall("testings", function (err, result) {
+// //     if (err) {
+// //         console.error(err);
+// //     } else {
+// //         const entries = Object.entries(result)
+// //         for (var [name, val] of entries) {
+// //             console.log(`${name} || ${val}`)
+// //         }
+// //     }
+// // });
+
+// var projInput = "Python"
+// var projDesc = "Weather App"
+
+// var inputStr = projInput.toUpperCase() + " || " + projDesc.toUpperCase()
+// client.sadd("testss", "PYTHON || CALCULATOR APP")
+// client.sadd("testss", "JAVASCRIPT || CALCULATOR APP")
+// client.sadd("testss", "JAVA || CALCULATOR APP")
+// if (client.sismember("testss", inputStr)){
+//     console.log("Thats already in our projects!")
+// }
+// else {
+//     console.log("Adding project")
+// }
+
+// client.srem("testss", "PYTHON || CALCULATOR APP")
+// client.smembers("testss", function (err, result) {
+//     if (err) {
+//         console.error(err);
+//     } else {
+//         for (var i = 0; i < result.length; i++) {
+//             console.log(result[i]);
+//             //Do something
+//         }
+//     }
+// });
+
+client.sadd("projectss", "Python || Calculator App")
+client.smembers("projectss", function (err, result) {
     if (err) {
         console.error(err);
     } else {
-        console.log(result); // Promise resolves to "bar"
+        for (var i = 0; i < result.length; i++) {
+            console.log(result[i]);
+            //Do something
+        }
     }
 });
 
-// Or ioredis returns a promise if the last argument isn't a function
-client.get("foo").then(function (result) {
-    console.log(result);
-});
 
-client.del("foo");
-
-// Arguments to commands are flattened, so the following are the same:
-client.sadd("set", 1, 3, 5, 7);
-client.sadd("set", [1, 3, 5, 7]);
-client.spop("set").then((res) => console.log(res)); // Promise resolves random value from the set
-
-// Most responses are strings, or arrays of strings
-client.zadd("sortedSet", 1, "one", 2, "dos", 4, "quatro", 3, "three");
-client.zrange("sortedSet", 0, 2, "WITHSCORES").then((res) => console.log(res));
-// Promise resolves to ["one", "1", "dos", "2", "three", "3"] as if the command was ` redis> ZRANGE sortedSet 0 2 WITHSCORES `
-
-// Some responses have transformers to JS values
-client.hset("myhash", "field1", "Hello");
-client.hgetall("myhash").then((res) => console.log(res)); // Promise resolves to Object {field1: "Hello"} rather than a string, or array of strings
-
-// All arguments are passed directly to the redis server:
-client.set("key", 100, "EX", 10); // set's key to value 100 and expires it after 10 seconds
-
-// Change the server configuration
-// client.config("set", "notify-keyspace-events", "KEA");
-
-
-// Demo the strings
-
-client.set('language', 'JavaScript')
-
-client.get('language').then(function (result) {
-    console.log(result);
-});
-
-client.set("language", "JavaScript", "EX", 10); // set's key to value JavaScript and expires it after 10 seconds
-
-// Demo the sets 
-
-client.sadd('jslist', "value1", "value2", "value3", "value4")
-client.sadd('powerlist', "value1", "value5", "value6", "value7")
-
-// Intercept of the two sets
-client.sinter('jslist', 'powerlist').then((res) => console.log(res));
-client.sunion('jslist', 'powerslist').then((res) => console.log(res));
-client.scard('jslist').then((res) => console.log(res));
-client.scard('powerlist').then((res) => console.log(res));
-
-
-
-// Demo the hashes
-
-client.hset('Hero', 'Name', 'Drow Ranger')
-client.hset('Hero', 'Health', '600')
-client.hset('Hero', 'Mana', '200')
-
-client.hgetall('Hero').then((res) => console.log(res));
 
 // Hero = {
 //     Name: 'Draw Ranger',
 //     Health: 600, 
 //     Mana, 200
 // }
+
+client.quit()

@@ -1,8 +1,9 @@
 var Redis = require('ioredis')
 
-const dotenv = require('dotenv')
-dotenv.config()
+require('dotenv').config({ path: './.env' })
+
 const redisPass = process.env.REDIS
+console.log(process.env.password)
 
 var client = new Redis({
     port: 6379,          // Redis port

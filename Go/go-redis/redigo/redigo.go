@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -28,6 +29,12 @@ func goDotEnvVariable(key string) string {
 		log.Fatalf("Error loading .env file")
 	}
 	return os.Getenv(key)
+}
+
+//User struct
+type User struct {
+	Language    string
+	Description string
 }
 
 func main() {
@@ -81,14 +88,36 @@ func main() {
 	if checkError(err) {
 		fmt.Println("scard: ", scard)
 	}
-
+	client.Do("DEL", "Projects")
 	client.Do("HSET", "Hero", "Name", "Draw Ranger")
 	client.Do("HSET", "Hero", "Health", "600")
 	client.Do("HSET", "Hero", "Mana", "200")
+	// client.Do("DEL", "PYTHON")
 
 	strMap, err := redis.StringMap(client.Do("HGETALL", "Hero"))
 	if checkError(err) {
 		fmt.Println("hash: ", strMap)
+	}
+
+	client.Do("DEL", "projects")
+
+	var unencoded *User
+
+	rangL, _ := redis.Strings(client.Do("LRANGE", "Languages", "0", "-1"))
+
+	json.Unmarshal([]byte(rangL[0]), &unencoded)
+
+	// rangD, err := redis.ByteSlices(client.Do("LRANGE", "Descriptions", "0", "-1"))
+	// if checkError(err) {
+	// 	fmt.Println()
+	// 	fmt.Println("rangeL: ", rangD)
+	// }
+
+	strMap, err = redis.StringMap(client.Do("HGETALL", "daily_status"))
+	if checkError(err) {
+		fmt.Println()
+		str, _ := json.Marshal(strMap)
+		fmt.Println("strmap: ", string(str))
 	}
 
 	exist := ""

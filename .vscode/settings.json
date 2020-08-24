@@ -1,7 +1,0 @@
-{
-    "java.configuration.updateBuildConfiguration": "interactive",
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "/Users/austinspencer/Downloads/jedis-3.3.0.jar"
-    ]
-}

@@ -88,7 +88,7 @@ func main() {
 	if checkError(err) {
 		fmt.Println("scard: ", scard)
 	}
-	client.Do("DEL", "Projects")
+
 	client.Do("HSET", "Hero", "Name", "Draw Ranger")
 	client.Do("HSET", "Hero", "Health", "600")
 	client.Do("HSET", "Hero", "Mana", "200")

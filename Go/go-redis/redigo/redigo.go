@@ -99,7 +99,7 @@ func main() {
 		fmt.Println("hash: ", strMap)
 	}
 
-	client.Do("DEL", "projects")
+	// client.Do("DEL", "projects")
 
 	var unencoded *User
 

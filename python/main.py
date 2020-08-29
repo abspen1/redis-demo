@@ -4,11 +4,10 @@ import json
 import time
 import os
 # https: // www.tutorialspoint.com/redis/redis_lists.htm
-client = redis.Redis(host="10.10.10.1",port=6379,db=0,password=os.getenv("REDIS_PASS"))
-
+client = redis.Redis(host="10.10.10.1",port=6379,db=7,password=os.getenv("REDIS_PASS"))
 ### demo the strings ###
 
-client.set('language', 'Python')
+# client.set('language', 'Python')
 
 print(client.get('language'))
 

@@ -44,8 +44,12 @@ print(client.scard('powerlist'))
 client.hset('Hero', 'Name', 'Drow Ranger')
 client.hset('Hero', 'Health', '600')
 client.hset('Hero', 'Mana', '200')
+client.incr("random_num")
+print(client.get("random_num"))
+client.incr("random_num", 50)
+print(client.get("random_num"))
 
-print(client.hgetall('Hero'))
+# print(client.hgetall('Hero'))
 
 # Hero = {
 #     Name: Drow,

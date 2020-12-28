@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-testing
+  name: redis-demo
   namespace: redis-demo
 spec:
   replicas: 1

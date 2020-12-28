@@ -2,7 +2,7 @@ stages:
 - name: Build & Publish
   steps:
   - publishImageConfig:
-      dockerfilePath: ./Dockerfile
+      dockerfilePath: ./dockerfile
       buildContext: .
       tag: redis-demo:${CICD_EXECUTION_SEQUENCE}
     env:

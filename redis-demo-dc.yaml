@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-testing
+  namespace: redis-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-demo
+  template:
+    metadata:
+      labels:
+        app: redis-demo
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: redis-demo
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        imagePullPolicy: Always
+        env:
+        - name: REDIS_PASS
+          valueFrom:
+            secretKeyRef:
+              key: REDIS_PASS
+              name: redis-pass
+        - name: REDIS_HOST
+          valueFrom:
+            secretKeyRef:
+              key: REDIS_HOST
+              name: redis-pass

@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-demo
-  namespace: redis-demo
+  name: redis-test
+  namespace: redis-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis-demo
+      app: redis-test
   template:
     metadata:
       labels:
-        app: redis-demo
+        app: redis-test
     spec:
       imagePullSecrets:
       - name: pipeline-docker-registry
       containers:
-      - name: redis-demo
+      - name: redis-test
         image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
         imagePullPolicy: Always
         env:

@@ -4,10 +4,10 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./dockerfile
       buildContext: .
-      tag: redis-demo:${CICD_EXECUTION_SEQUENCE}
+      tag: redis-test:${CICD_EXECUTION_SEQUENCE}
     env:
       PLUGIN_MTU: 1450
 - name: Deploy
   steps:
   - applyYamlConfig:
-      path: ./redis-demo-dc.yaml
+      path: ./redis-test-dc.yaml

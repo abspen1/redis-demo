@@ -48,7 +48,7 @@ def main():
         host=os.getenv("REDIS_HOST"), port=6379, db=0, password=os.getenv("REDIS_PASS")
     )
 
-    print(client.get("read"))
+    print(int(client.get("read")))
     print(client.dbsize())
 
 

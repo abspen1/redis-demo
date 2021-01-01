@@ -45,10 +45,10 @@ DB: 15 --
 
 def main():
     client = redis.Redis(
-        host=os.getenv("REDIS_HOST"), port=6379, db=7, password=os.getenv("REDIS_PASS")
+        host=os.getenv("REDIS_HOST"), port=6379, db=0, password=os.getenv("REDIS_PASS")
     )
 
-    print(client.get("language"))
+    client.set("cloud_read", "2442554")
     print(client.dbsize())
 
 

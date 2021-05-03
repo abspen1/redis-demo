@@ -54,7 +54,7 @@ def main():
 
 
 if __name__ == "__main__":
-    print("Running redis demo")
+    print("Running redis demo!")
     main()
 
 schedule.every(5).days.do(main)

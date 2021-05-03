@@ -48,11 +48,9 @@ def main():
         host=os.getenv("REDIS_HOST"), port=6379, db=0, password=os.getenv("REDIS_PASS")
     )
 
-    client.sadd("new_prospects", "NCTY")
-    client.sadd("new_prospects", "CHEK")
-    client.sadd("new_prospects", "JAGX")
-    client.sadd("new_prospects", "FTFT")
-    client.sadd("new_prospects", "PECK")
+    client.set("testing", "successful")
+    testRes = client.get("testing")
+    print(testRes)
 
 
 if __name__ == "__main__":
